@@ -3,19 +3,35 @@ if exists("load_wcvim")
 endif
 let load_wcvim=1
 
-function! CountCEWords()
+let s:current_dir = expand("<sfile>:p:h:h")
+let s:stripwchar = s:current_dir . "/stripwchar.py"
+if !filereadable(s:stripwchar)
+    throw "stripwchar.py not found in plugin directory"
+endif
+
+function! CountCEWords() range
     try
-        let l:ccount = split(execute(':%s/[\u4e00-\u9fa5\u3040-\u30FF]//gn'))[0]
+        let l:ccount = split(execute(a:firstline . "," . a:lastline
+                    \ . "s/[\u4e00-\u9fa5\u3040-\u30FF]//gn"))[0]
     catch
         let l:ccount = "0"
     endtry
-    let l:stripwchar = expand("<sfile>:p:h:h") . "/stripwchar.py"
-    if !filereadable(l:stripwchar)
-        throw "stripwchar.py not found in plugin directory"
-    endif
-    let l:ecount = system(l:stripwchar . " " . bufname("%") . " \| wc -w \| "
-                \ . "awk '{ print $1 }' \| tr -d '\n'")
-    echon "C " . l:ccount . " E " . l:ecount
+    let l:stdin = join(getline(a:firstline, a:lastline), "\n")
+    let l:ecount = len(split(system("python3 " . shellescape(s:stripwchar),
+                \ l:stdin)))
+    echo "C " . l:ccount . " E " . l:ecount
 endfunction
 
-command! -nargs=0 Wc call CountCEWords()
+function! CountTexCEWords() range
+    try
+        let l:ccount = split(execute(a:firstline . "," . a:lastline
+                    \ . "s/[\u4e00-\u9fa5\u3040-\u30FF]//gn"))[0]
+    catch
+        let l:ccount = "0"
+    endtry
+    let l:stdin = join(getline(a:firstline, a:lastline), "\n")
+    let l:ecount = len(split(system("detex -n \| "
+                \ . "python3 " . shellescape(s:stripwchar),
+                \ l:stdin)))
+    echo "C " . l:ccount . " E " . l:ecount
+endfunction
