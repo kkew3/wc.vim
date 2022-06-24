@@ -14,14 +14,28 @@ Via your favorite plugin manager.
 For example
 
 ```vim
+:call CountCEWords()
+```
+
+call `CountCEWords()` on current line.
+
+```vim
 :% call CountCEWords()
 ```
 
-and
+call `CountCEWords()` on the whole buffer.
 
 ```vim
 :2,35 call CountTexCEWords()
 ```
+
+call `CountTexCEWords()` on lines 2-35.
+
+```vim
+:'<,'> call CountTexCEWords()
+```
+
+call `CountTexCEWords()` on visual selected lines.
 
 # Recommended mappings
 
