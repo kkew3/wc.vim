@@ -17,21 +17,13 @@ function! CountCEWords() range
         let l:ccount = "0"
     endtry
     let l:stdin = join(getline(a:firstline, a:lastline), "\n")
-    let l:ecount = len(split(system("python3 " . shellescape(s:stripwchar),
-                \ l:stdin)))
-    echo "C " . l:ccount . " E " . l:ecount
-endfunction
-
-function! CountTexCEWords() range
-    try
-        let l:ccount = split(execute(a:firstline . "," . a:lastline
-                    \ . "s/[\u4e00-\u9fa5\u3040-\u30FF]//gn"))[0]
-    catch
-        let l:ccount = "0"
-    endtry
-    let l:stdin = join(getline(a:firstline, a:lastline), "\n")
-    let l:ecount = len(split(system("detex -n \| "
-                \ . "python3 " . shellescape(s:stripwchar),
-                \ l:stdin)))
+    if &filetype != "tex"
+        let l:ecount = len(split(system("python3 " . shellescape(s:stripwchar),
+                    \ l:stdin)))
+    else
+        let l:ecount = len(split(system("detex -n \| "
+                    \ . "python3 " . shellescape(s:stripwchar),
+                    \ l:stdin)))
+    endif
     echo "C " . l:ccount . " E " . l:ecount
 endfunction
