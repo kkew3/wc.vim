@@ -27,3 +27,5 @@ function! CountCEWords() range
     endif
     echo "C " . l:ccount . " E " . l:ecount
 endfunction
+
+command! -nargs=* -range Wc <line1>,<line2>call CountCEWords()
