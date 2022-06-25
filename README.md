@@ -6,65 +6,62 @@ This plugin counts the number of wide characters and the number of ASCII words.
 
 Via your favorite plugin manager.
 
-# Functions
+# Commands
 
-- `CountCEWords()`: count words in non-LaTeX buffers; should be called with range
-- `CountTexCEWords()`: count words in LaTeX buffers; should be called with range
+- `Wc`: (range command) count words in current buffer
 
 For example
 
 ```vim
-:call CountCEWords()
+:Wc
 ```
 
-call `CountCEWords()` on current line.
+count words in current line.
 
 ```vim
-:% call CountCEWords()
+:%Wc
 ```
 
-call `CountCEWords()` on the whole buffer.
+count words in the whole buffer.
 
 ```vim
-:2,35 call CountTexCEWords()
+:2,35Wc
 ```
 
-call `CountTexCEWords()` on lines 2-35.
+count words in lines 2-35.
 
 ```vim
-:'<,'> call CountTexCEWords()
+:'<,'>Wc
 ```
 
-call `CountTexCEWords()` on visual selected lines.
+count words in visual selected lines.
 
 # Recommended mappings
 
 At `~/.vimrc`,
 
 ```vim
-nnoremap <leader>cc :% call CountCEWords()<CR>
-```
-
-At `~/.vim/ftplugin/tex.vim`,
-
-```vim
-nnoremap <buffer> <leader>cc :% call CountTexCEWords()<CR>
+nnoremap <leader>cc :%Wc<CR>
 ```
 
 # Known bugs
 
-When calling either function (see above) with `%` range, the cursor goes to the beginning of current buffer.
+When invoking `:Wc` command with `%` range, the cursor goes to the beginning of current buffer.
 
 Workaround: use marks to remember cursor location.
 
 ```vim
-nnoremap <leader>cc mq:% call CountCEWords()<CR>`q
+nnoremap <leader>cc mq:%Wc<CR>`q
 ```
 
 etc.
 
-# Dependency
+# Dependencies
 
 - `python3` in PATH
 
 In case on Windows it's called `python`, you may make a `python3.cmd` in PATH which call `python` in it.
+
+- `detex` in PATH when counting words in `.tex` files
+
+This should already be included in a LaTeX distribution.
