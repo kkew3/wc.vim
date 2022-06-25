@@ -9,7 +9,7 @@ if !filereadable(s:stripwchar)
     throw "stripwchar.py not found in plugin directory"
 endif
 
-function! CountCEWords() range
+function! s:CountCEWords() range
     try
         let l:ccount = split(execute(a:firstline . "," . a:lastline
                     \ . "s/[\u4e00-\u9fa5\u3040-\u30FF]//gn"))[0]
@@ -28,4 +28,4 @@ function! CountCEWords() range
     echo "C " . l:ccount . " E " . l:ecount
 endfunction
 
-command! -nargs=* -range Wc <line1>,<line2>call CountCEWords()
+command! -nargs=* -range Wc <line1>,<line2>call s:CountCEWords()
