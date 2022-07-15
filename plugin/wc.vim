@@ -28,7 +28,7 @@ function! s:CountCEWords() range
     echo "C " . l:ccount . " E " . l:ecount
 endfunction
 
-command! -nargs=* -range -bar Wc
+command! -range -bar Wc
             \ let winview=winsaveview() |
             \ <line1>,<line2>call s:CountCEWords() |
             \ call winrestview(winview)
