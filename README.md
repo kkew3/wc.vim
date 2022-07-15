@@ -16,12 +16,6 @@ For example
 :Wc
 ```
 
-count words in current line.
-
-```vim
-:%Wc
-```
-
 count words in the whole buffer.
 
 ```vim
@@ -35,26 +29,6 @@ count words in lines 2-35.
 ```
 
 count words in visual selected lines.
-
-# Recommended mappings
-
-At `~/.vimrc`,
-
-```vim
-nnoremap <leader>cc :%Wc<CR>
-```
-
-# Known bugs
-
-When invoking `:Wc` command with `%` range, the cursor goes to the beginning of current buffer.
-
-Workaround: use marks to remember cursor location.
-
-```vim
-nnoremap <leader>cc mq:%Wc<CR>`q
-```
-
-etc.
 
 # Dependencies
 
