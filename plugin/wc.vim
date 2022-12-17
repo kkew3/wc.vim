@@ -29,6 +29,6 @@ function! s:CountCEWords() range
 endfunction
 
 command! -range=% -bar Wc
-            \ let winview=winsaveview() |
+            \ let s:winview=winsaveview() |
             \ <line1>,<line2>call s:CountCEWords() |
-            \ call winrestview(winview)
+            \ call winrestview(s:winview)
